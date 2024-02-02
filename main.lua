@@ -1,5 +1,7 @@
 -- main.lua
 
+local vudu = require 'lib.vudu'
+
 local input = require 'input'
 local world = require 'world'
 local physics_world = require 'physics_world'
@@ -14,6 +16,8 @@ local playerPosition = { x = screenWidth / 2, y = screenHeight / 2 }
 local player = require('entities.player')(playerPosition.x, playerPosition.y, 'kinematic', 'circle', 'line', { radius = 10 }, 300, 300)
 
 function love.load()
+  vudu.initialize()
+  vudu.physics.setWorld(physics_world)
   world:addEntity(player)
   world:addSystems(physics_system, draw_system)
 end
