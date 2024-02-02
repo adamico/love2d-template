@@ -1,6 +1,4 @@
 -- main.lua
-require 'lib.lovedebug'
-
 local vudu = require 'lib.vudu'
 
 local input = require 'input'
@@ -14,7 +12,7 @@ local screenWidth, screenHeight, flags = love.window.getMode()
 
 local playerPosition = { x = screenWidth / 2, y = screenHeight / 2 }
 
-local player = require('entities.player')(playerPosition.x, playerPosition.y, 'kinematic', 'circle', 'line', { radius = 10 }, 300, 300)
+local player = require('entities.player')(playerPosition.x, playerPosition.y, 'kinematic', 'circle', 'line', { radius = 30 }, 300, 300)
 
 function love.load()
   vudu.initialize()
