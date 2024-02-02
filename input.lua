@@ -50,6 +50,10 @@ function press_functions.space()
   input.paused = not input.paused
 end
 
+function press_functions.escape()
+  love.event.quit()
+end
+
 function release_functions.left()
   input.left = false
 end
@@ -66,8 +70,5 @@ function release_functions.down()
   input.down = false
 end
 
-function press_functions.escape()
-  love.event.quit()
-end
 
 return input

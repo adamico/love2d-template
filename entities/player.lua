@@ -1,6 +1,7 @@
 -- entities/player.lua
 
 local Concord = require 'lib.concord'
+Concord.utils.loadNamespace 'components'
 local Entity = Concord.entity
 
 local physics_world = require 'physics_world'
