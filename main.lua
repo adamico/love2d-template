@@ -1,4 +1,5 @@
 -- main.lua
+require 'lib.lovedebug'
 
 local vudu = require 'lib.vudu'
 
