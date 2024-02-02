@@ -55,16 +55,6 @@ return function (positionX, positionY, bodyType, shapeType, drawMode, dimensions
   function entity:update()
     local bodyX, bodyY = body:getPosition()
 
-    if input.left and input.right then
-      velocity.xDelta = 0
-      return
-    end
-
-    if input.up and input.down then
-      velocity.yDelta = 0
-      return
-    end
-
     if input.left and bodyX > leftBoundary then
       velocity.xDelta = -1
     elseif input.right and bodyX < rightBoundary then
@@ -81,6 +71,10 @@ return function (positionX, positionY, bodyType, shapeType, drawMode, dimensions
       velocity.yDelta = 0
     end
 
+    if velocity.xDelta ~= 0 and velocity.yDelta ~= 0 then
+      velocity.xDelta = velocity.xDelta * math.sqrt(2)/2
+      velocity.yDelta = velocity.yDelta * math.sqrt(2)/2
+    end
     body:setLinearVelocity(velocity.xValue * velocity.xDelta , velocity.yValue * velocity.yDelta )
   end
 
