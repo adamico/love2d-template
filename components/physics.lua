@@ -1,7 +1,8 @@
 -- components/physics.lua
+
 local Concord = require 'lib.concord'
 
-return Concord.component('physics', function(c, t, f)
-  c.type = t or 'dynamic'
-  c.friction = f or 1
+return Concord.component('physics', function(component, bodyType, fixtureFriction)
+  component.type = bodyType or 'dynamic'
+  component.friction = fixtureFriction or 1
 end)
