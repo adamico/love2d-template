@@ -9,7 +9,7 @@ local drawSystem = Concord.system({
 
 function drawSystem:draw()
   for _, entity in ipairs(self.pool) do
-    entity:draw()
+    if entity.draw then entity:draw() end
   end
 end
 

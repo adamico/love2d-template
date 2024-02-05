@@ -4,69 +4,37 @@ local Concord = require 'lib.concord'
 Concord.utils.loadNamespace 'components'
 local Entity = Concord.entity
 
-local physics_world = require 'physics_world'
+local world = require 'world'
 local input = require 'input'
 
 local physics = love.physics
 
-local shapesDict = {
-  circle = {
-    drawFunction = function (mode, positionX, positionY, dimensions)
-      return love.graphics.circle(mode, positionX, positionY, dimensions.radius)
-    end,
-    physicsFunction = function (dimensions)
-      return physics.newCircleShape(dimensions.radius)
-    end
-  },
-  rectangle = {
-    draw = function (mode, positionX, positionY, dimensions)
-      return love.graphics.rectangle(mode, positionX, positionY, dimensions.width, dimensions.height)
-    end,
-    physics = function (dimensions)
-      return physics.newRectangleShape(dimensions.width, dimensions.height)
-    end
-  }
-}
+local shapesDict = require 'shapes_dictionary'
 
-return function (positionX, positionY, bodyType, shapeType, drawMode, dimensions, velocityXValue, velocityYValue)
+return function (position, bodyType, shapeType, drawMode, dimensions, velocity)
   local entity = Entity()
 
-  local body = physics.newBody(physics_world, positionX, positionY, bodyType)
+  local body = physics.newBody(world, position.x, position.y, bodyType)
   local shape = shapesDict[shapeType].physicsFunction(dimensions)
   local fixture = physics.newFixture(body, shape)
   fixture:setUserData(entity)
 
-  local windowWidth, windowHeight = love.window.getMode()
-  local leftBoundary = dimensions.radius + 2
-  local rightBoundary = windowWidth - dimensions.radius - 2
-  local topBoundary = dimensions.radius + 2
-  local bottomBoundary = windowHeight - dimensions.radius - 2
-  local velocity = {
-    xValue = velocityXValue,
-    yValue = velocityYValue,
-    xDelta = 0,
-    yDelta = 0
-  }
-
   function entity:draw()
-    local bodyCenterX, bodyCenterY = body:getWorldCenter()
-    shapesDict[shapeType].drawFunction(drawMode, bodyCenterX, bodyCenterY, dimensions)
+    shapesDict[shapeType].drawFunction(drawMode, body, shape)
   end
 
-  function entity:update()
-    local bodyX, bodyY = body:getPosition()
-
-    if input.left and bodyX > leftBoundary then
+  function entity:update(dt)
+    if input.left then
       velocity.xDelta = -1
-    elseif input.right and bodyX < rightBoundary then
+    elseif input.right then
       velocity.xDelta = 1
     else
       velocity.xDelta = 0
     end
 
-    if input.up and bodyY > topBoundary then
+    if input.up then
       velocity.yDelta = -1
-    elseif input.down and bodyY < bottomBoundary then
+    elseif input.down then
       velocity.yDelta = 1
     else
       velocity.yDelta = 0

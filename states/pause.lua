@@ -9,7 +9,7 @@ local input = require 'input'
 local windowWidth, windowHeight = love.window.getMode()
 
 function pause:draw()
-	love.graphics.print('Game paused', windowWidth / 2, windowHeight /2)
+	love.graphics.print('Game paused', windowWidth/2, windowHeight/2)
 end
 
 function pause:update()
